@@ -1,13 +1,23 @@
-class jenkins::project {
+class jenkins::project ($jenkins_url = "http://localhost:8080") {
   include jenkins
-
-
 }
 
-define add-jenkins-project($name, $config_xml) {
+define jenkins-project($name) {
+  $jenkins_api_url = "${jenkins_url}/api"
 
+  file {
+    "/tmp/${name}_config.xml" :
+      ensure  => present,
+      content => template("jenkins/config.xml.erb"),
+  }
+
+  exec {
+    "post-file" :
+      command => "curl -F @${filename} $jenkins_api_url",
+      unless  => "test -d /var/lib/jenkins/jobs/${name}",
+  }
 }
 
-define copy-jenkins-project($name, $copy_from) {
+define jenkins-project-copy($name, $copy_from) {
 
 }
