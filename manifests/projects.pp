@@ -1,8 +1,4 @@
-class jenkins::project ($jenkins_url = "http://localhost:8080") {
-  include jenkins
-}
-
-define jenkins-project($name) {
+define jenkins-project($name, $jenkins_url = "http://localhost:8080") {
   $jenkins_api_url = "${jenkins_url}/api"
 
   file {
@@ -19,5 +15,5 @@ define jenkins-project($name) {
 }
 
 define jenkins-project-copy($name, $copy_from) {
-
+  # TODO: Write this
 }
