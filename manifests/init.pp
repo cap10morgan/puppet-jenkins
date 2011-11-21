@@ -1,3 +1,4 @@
+import "projects.pp"
 
 class jenkins {
   include jenkins::repo
